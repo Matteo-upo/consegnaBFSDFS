@@ -32,7 +32,9 @@ public class DFS {
 		padri = new int[g.getOrder()];
 		Arrays.fill(padri, -1);
 		nodesReached = 1;
+		connCpts = new int[g.getOrder()];
 		Arrays.fill(connCpts, -1);
+		
 		nCC = 0;
 	}
 	
@@ -98,12 +100,15 @@ public class DFS {
 	
 	private void visitaCompleta() throws NotAllNodesReachedException {
 		setUp();
-		
+		//connCpts[0] = 0;
 		for(int i = 0; i < currentG.getOrder(); i++) {
-			if(!visitati[i])
+			if(!visitati[i]) {
 				visita(i);
-			else
+				connCpts[i] = nCC;
 				nCC++;
+				
+			}
+			
 		}
 		
 		
@@ -190,10 +195,14 @@ public class DFS {
 	}
 	
 	public int[] connectedComponents() {
+		try {
+			visitaCompleta();
+		} catch (NotAllNodesReachedException e) {
+			e.printStackTrace();
+		}
 		
 		
-		
-		return null;
+		return connCpts;
 	}
 	
 
