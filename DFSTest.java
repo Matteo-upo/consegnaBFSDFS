@@ -118,7 +118,7 @@ class DFSTest {
 		
 		try {
 			dfsTest.getTree(-3);
-			fail("Avrebbe dovuto lanciare un’eccezione");
+			fail("Avrebbe dovuto lanciare unâ€™eccezione");
 		} 
 		catch (IllegalArgumentException e) {
 		} 
@@ -447,10 +447,33 @@ class DFSTest {
 	@Test
 	void testConnectedComponents() {
 		
-		GraphInterface grafo5NC = new DirectedGraph("5;4 0;4 1;4 2;3 4;2 3");
-		DFS dfsTest5NC = new DFS(grafo5NC);
+		GraphInterface grafo = new DirectedGraph("1");
+		DFS dfsTest = new DFS(grafo);
+		assertEquals(0, dfsTest.connectedComponents()[0]);
 		
-		assertTrue(dfsTest5NC.getDirCycle().size() == 3+1);
+		
+		GraphInterface grafoNC = new UndirectedGraph("2");
+		DFS dfsTestNC = new DFS(grafoNC);
+		
+		assertEquals(0,dfsTestNC.connectedComponents()[0]);
+		assertEquals(1,dfsTestNC.connectedComponents()[1]);
+		
+		GraphInterface grafoC = new UndirectedGraph("2;1 0");
+		DFS dfsTestC = new DFS(grafoC);
+		
+		assertEquals(0, dfsTestC.connectedComponents()[0]);
+		assertEquals(0, dfsTestC.connectedComponents()[1]);
+		
+		
+		GraphInterface grafo5NCNC = new UndirectedGraph("6;0 1;1 2;5 4;4 3;3 5");//6 nodi con ciclo non connesso
+		DFS dfsTest5NCNC = new DFS(grafo5NCNC);
+		
+		assertEquals(0, dfsTest5NCNC.connectedComponents()[0]);
+		assertEquals(0, dfsTest5NCNC.connectedComponents()[1]);
+		assertEquals(0, dfsTest5NCNC.connectedComponents()[2]);
+		assertEquals(1, dfsTest5NCNC.connectedComponents()[3]);
+		assertEquals(1, dfsTest5NCNC.connectedComponents()[4]);
+		assertEquals(1, dfsTest5NCNC.connectedComponents()[5]);
 		
 	}
 	
