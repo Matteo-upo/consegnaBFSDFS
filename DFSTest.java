@@ -477,39 +477,45 @@ class DFSTest {
 		
 	}
 	
-	
+	@Test
+	void testUndCyc() {
+		
+		GraphInterface grafo = new UndirectedGraph("1");
+		DFS dfsTest = new DFS(grafo);
+		assertTrue(!dfsTest.hasUndirectedCycle());
+		
+		GraphInterface grafo2 = new UndirectedGraph("2");
+		DFS dfsTest2 = new DFS(grafo2);
+		assertTrue(!dfsTest2.hasUndirectedCycle());
+		
+		GraphInterface grafo2CB = new UndirectedGraph("2;1 0");
+		DFS dfsTest2CB = new DFS(grafo2CB);
+		assertTrue(!dfsTest2CB.hasUndirectedCycle());
+		
+		GraphInterface grafo3 = new UndirectedGraph("3;0 1; 1 2");
+		DFS dfsTest3 = new DFS(grafo3);
+		assertTrue(!dfsTest3.hasUndirectedCycle());
+		
+		GraphInterface grafo3C = new UndirectedGraph("3;0 1; 1 2;0 2");
+		DFS dfsTest3C = new DFS(grafo3C);
+		assertTrue(dfsTest3C.hasUndirectedCycle());
+		
+		GraphInterface grafo5C = new UndirectedGraph("5;0 1; 1 2;0 2;1 3;0 4");
+		DFS dfsTest5C = new DFS(grafo5C);
+		assertTrue(dfsTest3C.hasUndirectedCycle());
+		
+		GraphInterface grafo6C = new UndirectedGraph("6;0 1; 1 2;3 5;4 5;4 3");
+		DFS dfsTest6C = new DFS(grafo6C);
+		assertTrue(dfsTest6C.hasUndirectedCycle());
+		
+		
+	}
 	
 	
 	
 	
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
