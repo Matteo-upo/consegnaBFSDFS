@@ -21,6 +21,7 @@ public class DFS {
 	private int nodesReached;
 	private int[] connCpts;
 	private int nCC;
+	private boolean UndCycle;
 
 	public DFS(GraphInterface g) {
 		visitati = new boolean[g.getOrder()];
@@ -34,8 +35,8 @@ public class DFS {
 		nodesReached = 1;
 		connCpts = new int[g.getOrder()];
 		Arrays.fill(connCpts, -1);
-		
 		nCC = 0;
+		UndCycle = false;
 	}
 	
 	private void visita(int sorgente){		
@@ -48,12 +49,17 @@ public class DFS {
 				nodesReached++;
 				connCpts[neighbor] = nCC;
 			}
-			else if(!risultato.contains(neighbor)){
-				if(cycle == false) {
-					cycleStart = neighbor;
-					cycleEnd = sorgente;
+			else{ 
+				if(!risultato.contains(neighbor)) {
+					if(cycle == false) {
+						cycleStart = neighbor;
+						cycleEnd = sorgente;
+					}
+					cycle = true;
 				}
-				cycle = true;
+				
+				if(neighbor != padri[sorgente])
+					UndCycle = true;
 			}
 		}
 		
@@ -85,6 +91,7 @@ public class DFS {
 		nodesReached = 1;
 		Arrays.fill(connCpts, -1);
 		nCC = 0;
+		UndCycle = false;
 	}
 	
 	private void checkAllNodeExc() throws NotAllNodesReachedException{
@@ -199,10 +206,19 @@ public class DFS {
 			visitaCompleta();
 		} catch (NotAllNodesReachedException e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		
 		return connCpts;
+	}
+	
+	public boolean hasUndirectedCycle() {
+		try {
+			visitaCompleta();
+		} catch (NotAllNodesReachedException e) {
+			e.printStackTrace();
+		}		
+		
+		return UndCycle;
 	}
 	
 
